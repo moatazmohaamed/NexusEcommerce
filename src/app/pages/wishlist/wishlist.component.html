@@ -1,0 +1,49 @@
+<section class="container py-7 ">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-3xl font-semibold">Wishlist ({{wishLisData.count}})</h2>
+    <button (click)="moveAllToCart()"
+      class="bg-white border-[0.5px] border-black text-black px-5 py-3 rounded-sm hover:bg-gray-300">Move All To
+      cart</button>
+  </div>
+
+
+  <div class="relative overflow-x-auto ">
+    <table class="w-full text-left text-[1rem] text-white rtl:text-right dark:text-gray-400">
+      <thead class="bg-gray-300 text-[1rem] mx-2 text-black uppercase dark:bg-gray-700 dark:text-gray-100">
+        <tr>
+          <th scope="col" class="px-6 py-3">Product</th>
+          <th scope="col" class="px-6 py-3">Price</th>
+          <th scope="col" class="px-6 py-3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        @for (wish of wishLisData.data; track $index) {
+        <tr class="border-b border-gray-200 bg-white ">
+          <td class="px-6 py-4 font-semibold text-white dark:text-black">
+            <div class="flex items-center">
+              <h1 class="text-4xl">
+                <button role="button" (click)="removeItem(wish.id)" class="fa text-gray-400 fa-xmark"></button>
+              </h1>
+              <img [src]="wish.imageCover" class="h-[100px] object-contain mx-2" [alt]="wish.title" />
+              <h1 class="mx-1">{{wish.title}}</h1>
+            </div>
+          </td>
+          <td class="px-6 py-4 font-semibold  dark:text-black text-white">{{wish.price | currency: "EGP"}}
+          </td>
+          <td class=" py-4">
+            <button (click)="addToCart(wish.id)" class="btn dark:bg-black dark:text-white">Add To Cart</button>
+          </td>
+        </tr>
+        } @empty {
+        <td rowspan="2" colspan="2" class="flex my-10 h-screen w-full">
+          <h1 class="text-4xl text-black dark:text-white ">You Don't have any favourites..</h1>
+        </td>
+        }
+
+
+      </tbody>
+    </table>
+  </div>
+
+</section>

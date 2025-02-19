@@ -1,0 +1,93 @@
+<div class="container mx-auto p-8">
+  <!-- Header -->
+  <h1 class="text-3xl text-center my-5 font-bold">My Account</h1>
+
+  <!-- Main Container -->
+  <div class="flex flex-col rounded-lg border border-gray-200 lg:flex-row">
+    <!-- Sidebar -->
+    <aside
+      class="flex w-full flex-col items-center border-r border-gray-200 bg-gray-50 p-6 lg:w-1/4 dark:bg-black dark:text-white">
+      <!-- Profile Section -->
+      <img
+        [src]="user ? user[0].photoURL : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png' "
+        alt="Profile" class="mb-4 h-24 w-24 rounded-full" />
+      <h2 class="mb-8  text-lg font-semibold">{{user ? user[0].displayName : authService.userData.name}}</h2>
+
+      <!-- Navigation Links -->
+      <nav class="w-full">
+        <ul class="space-y-4">
+          <li>
+            <button
+              class="block focus:border-b-2 w-full text-start focus:border-black dark:focus:border-white font-medium text-black dark:text-white hover:text-gray-700">
+              Account </button>
+          </li>
+
+        </ul>
+      </nav>
+
+    </aside>
+    <!-- Account Form Section -->
+    <div class="w-full p-6 lg:w-3/4">
+      <h2 class="mb-6 text-xl font-bold">Account Details</h2>
+
+      <!-- Form Fields -->
+      <form>
+        <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <!-- First Name -->
+          <div class="max-w-sm space-y-3">
+            <label class="mb-2 block font-medium">First Name</label>
+            <input type="text"
+              [placeholder]="user ? user[0].displayName.split(' ').slice(' ' , 1) : authService.userData.name"
+              class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-black focus:ring-black fisabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              readonly="">
+          </div>
+          <!-- Last Name -->
+          <div class="max-w-sm space-y-3">
+            <label class="mb-2 block font-medium">Last Name</label>
+            <input type="text"
+              [placeholder]="user ? user[0].displayName.split(' ').slice(-1)[0] : authService.userData.name"
+              class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-black focus:ring-black fisabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              readonly="">
+          </div>
+        </div>
+
+
+        <div class="mb-6">
+          <label class="mb-2 block font-medium">Email*</label>
+          <input type="text" [value]="user ? user[0].email : 'email' "
+            class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-black focus:ring-black fisabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+            placeholder="Your email" readonly>
+        </div>
+      </form>
+
+
+
+      <!-- Password Section -->
+      <h2 class="mb-6 text-xl font-bold">Uptade Password?</h2>
+      <form [formGroup]="passwordForm" (ngSubmit)="submitData()">
+        <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <!-- Old Password -->
+          <div>
+            <label class="mb-2 block font-medium">Old Password</label>
+            <input formControlName="currentPassword" type="password" placeholder="Old password"
+              class="w-full rounded-md border-gray-300 p-3 focus:ring-black  focus:border-black" />
+          </div>
+          <!-- New Password -->
+          <div>
+            <label class="mb-2 block font-medium">New Password</label>
+            <input formControlName="password" type="password" placeholder="New password"
+              class="w-full rounded-md border-gray-300 p-3 focus:ring-black  focus:border-black" />
+          </div>
+        </div>
+        <!-- Repeat New Password -->
+        <div class="mb-6">
+          <label class="mb-2 block font-medium">Repeat New Password</label>
+          <input formControlName="rePassword" type="password" placeholder="Repeat new password"
+            class="w-full rounded-md border-gray-300 p-3 focus:ring-black focus:border-black" />
+        </div>
+        <button type="submit" class="rounded-md bg-black px-6 py-3 text-white hover:bg-gray-800">Save changes</button>
+      </form>
+      <!-- Save Changes Button -->
+    </div>
+  </div>
+</div>

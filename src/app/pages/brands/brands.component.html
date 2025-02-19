@@ -1,0 +1,11 @@
+<section class=' flex justify-center my-7 overflow-y-scroll '>
+  <div class='grid md:grid-cols-4  gap-10 '>
+    @for (brand of allBrands.data; track $index) {
+    <div class="cursor-pointer rounded-lg bg-white dark:bg-black dark:text-white p-6 shadow-md ">
+      <div>
+        <img [src]="brand.image" class="h-[200px]  w-full rounded-md object-contain " />
+      </div>
+    </div>
+    }
+  </div>
+</section>

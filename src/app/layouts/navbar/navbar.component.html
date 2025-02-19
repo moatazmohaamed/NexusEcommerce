@@ -1,0 +1,146 @@
+<nav
+  [class]="isScroll ? ' border-gray-200 py-3 w-full  dark:bg-black fixed top-0 z-[99999] transition-all duration-300':'border-gray-200 relative z-[99999] transition-all duration-300 dark:bg-black'"
+  class="bg-white/20 backdrop-blur-3xl  ">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
+    <a routerLink="/home" class="flex items-center space-x-3 rtl:space-x-reverse text-[1.4rem]">
+      <span [class.text-3xl]="!isLogin()" [class.text-2xl]="isScroll"
+        class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white transition-all duration-300">Nexus</span>
+    </a>
+    <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+      <div class="flex items-center dark:text-white">
+
+
+        <div class="hs-dropdown pt-2">
+          <button id="hs-dropdown-dark-mode" type="button"
+            class="hs-dropdown-toggle hs-dark-mode group flex items-center text-gray-600 focus:outline-none font-medium dark:text-white dark:hover:text-neutral-500 dark:focus:text-neutral-500"
+            aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+            <svg class="hs-dark-mode-active:hidden block size-6" xmlns="http://www.w3.org/2000/svg" width="24"
+              height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+            </svg>
+            <svg class="hs-dark-mode-active:block hidden size-6" xmlns="http://www.w3.org/2000/svg" width="24"
+              height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2"></path>
+              <path d="M12 20v2"></path>
+              <path d="m4.93 4.93 1.41 1.41"></path>
+              <path d="m17.66 17.66 1.41 1.41"></path>
+              <path d="M2 12h2"></path>
+              <path d="M20 12h2"></path>
+              <path d="m6.34 17.66-1.41 1.41"></path>
+              <path d="m19.07 4.93-1.41 1.41"></path>
+            </svg>
+          </button>
+
+          <div id="selectThemeDropdown"
+            class="hs-dropdown-menu ml-[10rem] hs-dropdown-open:opacity-100 mt-2 hidden  relative transition-[margin,opacity] opacity-0 duration-300 mb-2 origin-bottom-left bg-white shadow-md rounded-lg p-1 space-y-0.5 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700"
+            role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-dark-mode">
+            <button type="button" class="dropDownBtn" data-hs-theme-click-value="default">
+              Default (Light)
+            </button>
+            <button type="button" class="dropDownBtn" data-hs-theme-click-value="dark">
+              Dark
+            </button>
+          </div>
+        </div>
+
+
+        @if (isLogin()) {
+
+        <button class=" relative inline-flex items-center text-sm font-medium text-center text-black focus:outline-none
+          dark:text-white">
+          <lucide-angular routerLink="/wishlist" role="button" [img]="Heart" class="mx-1 mt-1"></lucide-angular>
+          <span class="sr-only">Notifications</span>
+          <div
+            class="absolute inline-flex items-center justify-center w-7 h-7 text-xs font-bold text-white bg-black border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900 dark:bg-white dark:text-black">
+
+            {{wishListCount()}}
+
+          </div>
+        </button>
+
+
+        <div class="relative mx-1" (click)="toggleDropdown()">
+          <lucide-angular role="button" [img]="CircleUserRound" id="CircleUserRound" class="mt-2"></lucide-angular>
+          @if (isDropdownOpen) {
+          <div id="dropDown"
+            class="absolute z-50 right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white opacity-100 shadow-lg transition-all duration-400 group-hover:visible group-hover:opacity-100 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700">
+            <div class="p-2">
+              <button routerLink="/account" class="dropDownBtn">My
+                Account</button>
+              <button routerLink="/allorders" class="dropDownBtn">My
+                Order</button>
+              <button routerLink="/wishlist" class="dropDownBtn">My
+                Wishlist</button>
+              <div (click)="authService.loggedOut()" class="dropDownBtn">
+                <lucide-angular [img]="LogOut">
+                </lucide-angular>
+                <button class="block px-4 py-2 ">Logout</button>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+
+        <button class=" relative inline-flex items-center text-sm font-medium text-center text-black focus:outline-none
+          dark:text-white">
+          <lucide-angular routerLink="/cart" value="2" role="button" [img]="ShoppingBag" class="mx-1 mt-1 ">
+          </lucide-angular>
+          <span class="sr-only">Notifications</span>
+          <div
+            class="absolute inline-flex items-center justify-center w-7 h-7 text-xs font-bold text-white bg-black border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900 dark:bg-white dark:text-black">
+            {{cartService.totalCartItems.getValue()}}</div>
+        </button>
+
+        } @else {
+        <div class="flex items-center mt-2 text-lg ">
+          <lucide-angular role=" button" routerLink="/login" [img]="LogIn" class="mx-1 ">
+          </lucide-angular>
+          <button routerLink="/login" class="me-2 ">Login</button>
+          <button routerLink="/register">Register</button>
+        </div>
+        }
+
+        <button data-collapse-toggle="navbar-ctaa" type="button" (click)="openNav()"
+          class="flex items-center mt-2 p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-cta" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15" />
+          </svg>
+        </button>
+
+
+      </div>
+
+    </div>
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1 " id="navbar-ctaa">
+      @if (isLogin()) {
+      <ul
+        class="flex text-center md:text-start flex-col capitalize p-4 md:p-0 mt-4 bg-gray-200 md:bg-white border border-gray-300 rounded-lg md:space-x-3 rtl:space-x-reverse md:flex-row md:mt-2 md:border-0 ">
+        <li>
+          <a routerLink="/home" routerLinkActive="dark:text-black routerLinkActive"
+            class=" block py-2 px-3  dark:hover:text-gray-500 text-gray-500" aria-current="page">home</a>
+        </li>
+        <li>
+          <a routerLink="/products" routerLinkActive="routerLinkActive dark:text-black"
+            class="block py-2 px-3  dark:hover:text-gray-500 text-gray-500" aria-current="page">Product</a>
+        </li>
+        <li>
+          <a routerLink="/cart" routerLinkActive="routerLinkActive dark:text-black"
+            class="block py-2 px-3  dark:hover:text-gray-500 text-gray-500" aria-current="page">cart</a>
+        </li>
+
+        <li>
+          <a routerLink="/brands" routerLinkActive="routerLinkActive dark:text-black"
+            class="block py-2 px-3   dark:hover:text-gray-500 text-gray-500" aria-current="page">brands</a>
+        </li>
+
+      </ul>
+      }
+    </div>
+  </div>
+</nav>

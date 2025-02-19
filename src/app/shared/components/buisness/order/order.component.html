@@ -1,0 +1,42 @@
+  <section class="w-full max-w-2xl m-auto rounded-2xl  p-6 my-10">
+    <div class="text-center">
+      @if (cartItem) {
+      <h2 class="text-xl font-semibold md:text-2xl">Thank you! 🥳</h2>
+      <p class="mt-2 text-2xl font-medium text-gray-700 md:text-3xl">
+        Your order has been <br />
+        received
+      </p>
+      }
+    </div>
+
+    <div class="my-6 flex justify-center space-x-6">
+      @for (item of cartItem; track $index) {
+      <div class="relative">
+        <img [src]="item.product.imageCover" alt="Item 1" class="rounded-lg h-[250px] object-contain" />
+        <span class="absolute -top-2 -right-2 rounded-full bg-black px-2 py-1 text-xs text-white">{{item.count}}</span>
+      </div>
+      } @empty {
+      <div class="flex justify-center items-start h-[400px]">
+        <h1 class="text-2xl my-5"> You haven't ordered anything..</h1>
+      </div>
+      }
+
+    </div>
+
+    @if (cartItem) {
+    <div class="rounded-lg bg-gray-50 dark:bg-gray-950 p-4 text-center">
+      <p class="text-sm text-gray-600"><span class="font-medium">Order code:</span> #0123_45678</p>
+      <p class="text-sm text-gray-600"><span class="font-medium">Date:</span> {{moreDetails.createdAt | date: "medium"}}
+      </p>
+      <p class="text-sm text-gray-600"><span class="font-medium">Total:</span> EGP{{moreDetails.totalOrderPrice}}.00</p>
+      <p class="text-sm  text-gray-600"><span class="font-medium">Payment method:</span>
+        {{moreDetails.paymentMethodType === 'card' ? 'Credit Card' : "Cash" }}</p>
+    </div>
+
+    }
+    <div class="mt-6 text-center">
+      <button routerLink="/home"
+        class="rounded-lg bg-black dark:bg-white dark:text-black px-6 py-2 text-white transition hover:bg-gray-800">Continue
+        Shopping</button>
+    </div>
+  </section>

@@ -1,0 +1,227 @@
+<main
+  class="container mx-auto selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
+
+  <!-- Swiper  -->
+  <section class="py-4">
+    <swiper-container class="mySwiper w-full " pagination="true" pagination-clickable="true" space-between="30"
+      effect="fade" centered-slides="true" autoplay-disable-on-interaction="false" autoplay-delay="2500"
+      auto-height="true" keyboard="true" centered-slides="true" [breakpoints]="breakpoints">
+      <swiper-slide>
+        <img src="/assets/image.png" class="w-full rounded-md" />
+      </swiper-slide>
+      <swiper-slide>
+        <img src="/assets/img5.avif" class="w-full rounded-md" />
+      </swiper-slide>
+      <swiper-slide>
+        <img src="/assets/img2.png" class="w-full rounded-md" />
+      </swiper-slide>
+
+    </swiper-container>
+
+
+  </section>
+
+  <section class="py-7">
+    <div class="flex items-center">
+      <div class="w-7 bg-black h-12 me-2 rounded-lg dark:bg-white"></div>
+      <p class="font-semibold relative before:absolute before:w-5 before:bg-black ">Categories
+      </p>
+    </div>
+    <div class="flex justify-between items-center py-4">
+      <h1 #el class="text-4xl font-semibold">Browse By Category</h1>
+    </div>
+  </section>
+
+  <section>
+    <owl-carousel-o [options]="customOptions">
+      @for (category of categories; track category._id) {
+
+      <ng-template carouselSlide>
+        <div
+          class="flex flex-col justify-center items-center border border-1 border-gray-100 dark:border-0 p-4 rounded-lg hover:bg-black hover:text-white transition-all duration-200 cursor-pointer">
+          <div>
+            <img [src]="category.image" [alt]="category.name" class="h-[230px] object-contain">
+          </div>
+          <p class="text-2xl">{{category.name}}</p>
+        </div>
+      </ng-template>
+      }
+
+    </owl-carousel-o>
+  </section>
+
+  <section class="py-6">
+    <div class="flex justify-between items-center">
+      <h1 #el class="text-5xl  font-semibold">New <br> Arrivals</h1>
+      <button routerLink="/products" role="button" class="underline text-xl me-2 self-end">More Products <i
+          class="fa fa-arrow-right"></i>
+      </button>
+    </div>
+
+
+    <div class="grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
+      @for (product of products.slice(0,4); track product._id) {
+      <div class="py-5">
+        <div
+          class="group relative cursor-pointer overflow-hidden rounded-lg bg-white dark:bg-black dark:text-white  p-6 shadow-md ">
+          <div class="mb-4 flex flex-col items-start justify-between">
+            <span class="text-md rounded-sm bg-gray-200 px-2 py-1 font-semibold text-black">NEW</span>
+            <span class="text-md mt-1 rounded-sm bg-green-500 px-3 font-semibold text-white">-50%</span>
+          </div>
+          <div class="absolute top-8 right-5">
+            @if (isProductWishlisted(product.id)) {
+            <i class="fas fa-heart text-2xl" role="button"></i>
+            } @else {
+            <i class="far fa-heart text-2xl" (click)="addProdToWishList(product.id)" role="button"></i>
+            }
+          </div>
+
+          <div #productCard class="relative">
+            <div [routerLink]='["/details" , product._id]'>
+              <div (mousemove)="closerLook()" class="image-container">
+                <img #productImage [src]="product.imageCover" [alt]="product.title"
+                  class="relative product-image  h-[250px] w-full rounded-md object-contain cursor-zoom-in" />
+                <div #lens class="lens  absolute pointer-events-none w-[150px] h-[150px] rounded-[4rem] bg-no-repeat">
+                </div>
+              </div>
+            </div>
+
+
+
+            <button (click)="addToCart(product.id)"
+              class=" cursor-pointer absolute bottom-0 mt-4 w-full translate-x-[120%] rounded-md bg-black px-4 py-2 dark:bg-white dark:text-black
+                text-white transition-transform duration-300 ease-in-out group-hover:translate-x-0 hover:bg-gray-800">Add
+              to cart</button>
+
+          </div>
+
+          <div class="mt-4  ">
+            <p class="text-2xs opacity-30">{{product.category.name}}</p>
+            <div class="flex text-black dark:text-white">{{product.ratingsAverage > 2 ? "★★★★★" : '★★★✰✰'}}
+              {{product.ratingsAverage}}</div>
+          </div>
+          <div>
+            <h2 class="text-lg font-semibold ">{{product.title}}</h2>
+          </div>
+
+          <div class="mt-2">
+            <span class="text-xl font-bold text-gray-900 dark:text-white">{{product.price - 50}}EGP</span>
+            <span class="ml-2 text-sm text-gray-500 line-through dark:text-white">{{product.price}}EGP</span>
+          </div>
+        </div>
+
+      </div>
+      }
+    </div>
+  </section>
+
+  <section class="mt-[6rem]">
+    <div>
+      <div class="flex items-center">
+        <div class="w-7 bg-black h-12 me-2 rounded-lg dark:bg-white"></div>
+        <p class="font-semibold relative before:absolute before:w-5 before:bg-black">Our Products
+        </p>
+      </div>
+      <div class="flex justify-between items-center py-4">
+        <h1 class="text-4xl font-semibold">
+          Explore Our Products</h1>
+        <button routerLink="/products" role="button" class="underline text-xl me-2 self-end">More Products <i
+            class="fa fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 py-7 ">
+
+      @for (prod of products.slice(5,13); track prod._id) {
+      <div
+        class="group mx-auto max-w-sm overflow-hidden rounded-lg cursor-pointer bg-white dark:bg-black dark:text-white p-6 shadow-md hover:shadow-lg transition-all duration-300">
+        <div #productCard class="relative">
+          <div (mousemove)="closerLook()" class="image-container">
+            <img #productImage [routerLink]='["/details" , prod._id]' [src]="prod.imageCover" alt="prod.title"
+              class="relative product-image w-full rounded-md object-contain cursor-zoom-in" />
+            <div #lens class="lens absolute pointer-events-none w-[150px] h-[150px] rounded-[4rem] bg-no-repeat">
+            </div>
+          </div>
+
+          <div class="absolute top-2 right-0">
+            @if (isProductWishlisted(prod.id)) {
+            <i class="fas fa-heart text-2xl" role="button"></i>
+            } @else {
+            <i class="far fa-heart text-2xl" (click)="addProdToWishList(prod.id)" role="button"></i>
+            }
+          </div>
+
+          <button (click)="addToCart(prod.id)"
+            class="cursor-pointer absolute bottom-0 mt-4 w-full translate-x-[120%]  rounded-md bg-black px-4 py-2 text-white transition-transform duration-300 ease-in-out group-hover:translate-x-0 hover:bg-gray-800">Add
+            to cart</button>
+        </div>
+
+        <div class="mt-4 ">
+          <p class="text-2xs opacity-30">{{prod.category.name}}</p>
+          <div class="flex text-black dark:text-white">{{prod.ratingsAverage > 2 ? "★★★★★" : '★★★✰✰'}}
+            {{prod.ratingsAverage}}</div>
+        </div>
+
+        <div class="">
+          <h2 class="text-lg font-semibold">{{prod.title.split(" ",2).join(" ")}}</h2>
+        </div>
+
+        <div class="mt-2">
+          <span class="text-xl dark:text-white font-bold text-gray-900">{{prod.price - 63}}EGP </span>
+          <span class="ml-2 text-sm text-gray-500 line-through dark:text-white">{{prod.price}}EGP </span>
+        </div>
+      </div>
+      }
+
+    </div>
+
+    <div class="text-center pb-6">
+      <button routerLink="/products"
+        class="bg-black dark:bg-white dark:text-black w-40 text-white py-2 rounded-md hover:bg-[#000]/80 transition duration-300">
+        View All Products
+      </button>
+    </div>
+
+
+  </section>
+
+  <section class="py-6 ">
+    <div class="container mx-auto px-4 py-11">
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 ">
+        <div
+          class="flex flex-col justify-center items-center border border-1 border-gray-200  dark:border-0 p-10 rounded-lg">
+          <lucide-angular size="50" [img]="Truck">
+          </lucide-angular>
+          <h1 class="mb-2 text-2xl font-bold">FREE AND FAST DELIVERY</h1>
+          <p class="text-gray-600">Free delivery for all orders over $140</p>
+        </div>
+
+        <div
+          class="flex flex-col justify-center items-center  border border-1 border-gray-200  dark:border-0 p-10 rounded-lg">
+          <lucide-angular size="50" [img]="ShieldQuestion">
+          </lucide-angular>
+          <h1 class="mb-2 text-2xl font-bold">24/7 CUSTOMER SERVICE</h1>
+          <p class="text-gray-600">Friendly 24/7 customer support</p>
+        </div>
+
+        <div
+          class="flex flex-col justify-center items-center border border-1 border-gray-200 p-10  dark:border-0 rounded-lg ">
+          <lucide-angular size="50" [img]="CircleDollarSign">
+          </lucide-angular>
+          <h1 class="mb-2 text-2xl font-bold">MONEY BACK GUARANTEE</h1>
+          <p class="text-gray-600">We reurn money within 30 days</p>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+
+
+  <p-scrolltop styleClass="home.component.scss" [threshold]="1"
+    [buttonProps]="{ severity: 'primary', raised: true, rounded: true }" icon="fa fa-circle-arrow-up text-4xl" />
+
+
+
+</main>

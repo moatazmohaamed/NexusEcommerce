@@ -1,0 +1,271 @@
+<section class="relative">
+
+  <div class="grid md:grid-cols-2 max-w-6xl  m-auto gap-8 items-center space-y-5">
+
+    <div class="me-0 md:me-4">
+      <img src="assets/img4.png" alt="photo" class="hidden md:block object-fit-contain">
+    </div>
+
+
+    <div class="text-center md:text-start w-full m-auto">
+      <div class="form-header">
+        <h1 class="font-semibold text-3xl">Forget Password?</h1>
+      </div>
+
+      @if(step == 1){
+      <form [formGroup]="verifyEmail" (ngSubmit)="verifyEmailSub()" class="py-5 mx-10 md:mx-0 max-w-2xl">
+        <div class="relative mb-5">
+          @let emailControl = verifyEmail.get('email');
+          <input formControlName="email" type="email" id="hs-floating-underline-input-email" class="peer py-4 px-0 block w-full bg-transparent border-t-transparent border-b-2 border-x-transparent border-b-gray-200 text-md placeholder:text-transparent focus:border-t-transparent focus:border-x-transparent focus:border-black focus:ring-0 disabled:opacity-50 disabled:pointer-events-none dark:border-b-neutral-700 dark:text-neutral-400 dark:focus:ring-neutral-600 dark:focus:border-b-neutral-600
+          focus:pt-6
+          focus:pb-2
+          [&:not(:placeholder-shown)]:pt-6
+          [&:not(:placeholder-shown)]:pb-2
+          autofill:pt-6
+          autofill:pb-2" placeholder="you@email.com">
+          <label for="hs-floating-underline-input-email"
+            class="absolute top-0 start-0 py-1 px-0 h-full text-md truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] peer-disabled:opacity-50 peer-disabled:pointer-events-none
+            peer-focus:scale-90
+            peer-focus:translate-x-0.5
+            peer-focus:-translate-y-1.5
+            peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
+            peer-[:not(:placeholder-shown)]:scale-90
+            peer-[:not(:placeholder-shown)]:translate-x-0.5
+            peer-[:not(:placeholder-shown)]:-translate-y-1.5
+            peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500 dark:text-neutral-500">Email</label>
+
+          @if (emailControl?.errors && emailControl?.touched) {
+          <div
+            class="bg-red-50 border border-red-200 text-sm text-red-800 rounded-sm p-4 mt-2 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500"
+            role="alert" tabindex="-1" aria-labelledby="hs-with-list-label">
+            <div class="flex ">
+
+              <div class="shrink-0">
+                <svg class="shrink-0 size-4 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="m15 9-6 6"></path>
+                  <path d="m9 9 6 6"></path>
+                </svg>
+              </div>
+
+
+              <div class="ms-4">
+                <div class="text-sm text-red-700 dark:text-red-400">
+                  <ul class="list-disc space-y-1 ps-5">
+                    @if (emailControl?.getError('required')) {
+                    <li>
+                      Email is required
+                    </li>
+                    } @else if (emailControl?.getError('email')
+                    ) {
+
+                    <li>
+                      Enter a valid email
+                    </li>
+                    }
+                  </ul>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          }
+
+        </div>
+
+        <div>
+          <button [disabled]="isLoading" type="submit" class="btn">Verify Email
+            @if (isLoading) {
+            <span><i class="fa fa-spin fa-spinner"></i></span>
+            }
+          </button>
+
+          @if (resetMsg) {
+          <div
+            class="mt-2 bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg p-4 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500"
+            role="alert" tabindex="-1" aria-labelledby="hs-soft-color-danger-label">
+            {{resetMsg}}
+          </div>
+          }
+
+        </div>
+
+      </form>
+      }@else if(step == 2){
+      <form [formGroup]="verifyCode" (ngSubmit)="verifyCodeSub()" class="py-5 mx-10 md:mx-0 max-w-2xl">
+
+        <div class="relative mb-5">
+          <input formControlName="resetCode" type="text" id="hs-floating-underline-input-email" class="peer py-4 px-0 block w-full bg-transparent border-t-transparent border-b-2 border-x-transparent border-b-gray-200 text-md placeholder:text-transparent focus:border-t-transparent focus:border-x-transparent focus:border-black focus:ring-0 disabled:opacity-50 disabled:pointer-events-none dark:border-b-neutral-700 dark:text-neutral-400 dark:focus:ring-neutral-600 dark:focus:border-b-neutral-600
+          focus:pt-6
+          focus:pb-2
+          [&:not(:placeholder-shown)]:pt-6
+          [&:not(:placeholder-shown)]:pb-2
+          autofill:pt-6
+          autofill:pb-2" placeholder="you@email.com">
+          <label for="hs-floating-underline-input-email"
+            class="absolute top-0 start-0 py-1 px-0 h-full text-md truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] peer-disabled:opacity-50 peer-disabled:pointer-events-none
+            peer-focus:scale-90
+            peer-focus:translate-x-0.5
+            peer-focus:-translate-y-1.5
+            peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
+            peer-[:not(:placeholder-shown)]:scale-90
+            peer-[:not(:placeholder-shown)]:translate-x-0.5
+            peer-[:not(:placeholder-shown)]:-translate-y-1.5
+            peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500 dark:text-neutral-500">Reset code</label>
+        </div>
+
+        <div>
+          <button [disabled]="isLoading" type="submit" class="btn">Send Code
+            @if (isLoading) {
+            <span><i class="fa fa-spin fa-spinner"></i></span>
+            }
+          </button>
+
+          @if(codeMsg){
+          <div
+            class="mt-2 bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg p-4 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500"
+            role="alert" tabindex="-1" aria-labelledby="hs-soft-color-danger-label">
+            {{codeMsg}}
+          </div>
+          }
+
+        </div>
+
+      </form>
+      }@else if(step == 3){
+      <form [formGroup]="resetPass" (ngSubmit)="resetPassSub()" class="py-5 mx-10 md:mx-0 max-w-2xl">
+
+        <div class="relative mb-5">
+          @let reset = resetPass.get('email');
+          <input formControlName="email" type="email" id="hs-floating-underline-input-email" class="peer py-4 px-0 block w-full bg-transparent border-t-transparent border-b-2 border-x-transparent border-b-gray-200 text-md placeholder:text-transparent focus:border-t-transparent focus:border-x-transparent focus:border-black focus:ring-0 disabled:opacity-50 disabled:pointer-events-none dark:border-b-neutral-700 dark:text-neutral-400 dark:focus:ring-neutral-600 dark:focus:border-b-neutral-600
+          focus:pt-6
+          focus:pb-2
+          [&:not(:placeholder-shown)]:pt-6
+          [&:not(:placeholder-shown)]:pb-2
+          autofill:pt-6
+          autofill:pb-2" placeholder="you@email.com">
+          <label for="hs-floating-underline-input-email"
+            class="absolute top-0 start-0 py-1 px-0 h-full text-md truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] peer-disabled:opacity-50 peer-disabled:pointer-events-none
+            peer-focus:scale-90
+            peer-focus:translate-x-0.5
+            peer-focus:-translate-y-1.5
+            peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
+            peer-[:not(:placeholder-shown)]:scale-90
+            peer-[:not(:placeholder-shown)]:translate-x-0.5
+            peer-[:not(:placeholder-shown)]:-translate-y-1.5
+            peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500 dark:text-neutral-500">Email</label>
+
+          @if (reset?.errors && reset?.touched) {
+          <div
+            class="bg-red-50 border border-red-200 text-sm text-red-800 rounded-sm p-4 mt-2 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500"
+            role="alert" tabindex="-1" aria-labelledby="hs-with-list-label">
+            <div class="flex ">
+
+              <div class="shrink-0">
+                <svg class="shrink-0 size-4 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="m15 9-6 6"></path>
+                  <path d="m9 9 6 6"></path>
+                </svg>
+              </div>
+
+
+              <div class="ms-4">
+                <div class="text-sm text-red-700 dark:text-red-400">
+                  <ul class="list-disc space-y-1 ps-5">
+                    @if (reset?.getError('required')) {
+                    <li>
+                      Email is required
+                    </li>
+                    } @else if (reset?.getError('email')
+                    ) {
+
+                    <li>
+                      Enter a valid email
+                    </li>
+                    }
+                  </ul>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          }
+
+        </div>
+
+        <div class="relative mb-5">
+          @let newPass = resetPass.get('newPassword');
+          <input formControlName="newPassword" type="password" id="hs-floating-underline-input-password" class="peer py-4 px-0 block w-full bg-transparent border-t-transparent border-b-2 border-x-transparent border-b-gray-200 text-md placeholder:text-transparent focus:border-t-transparent focus:border-x-transparent focus:border-black focus:ring-0 disabled:opacity-50 disabled:pointer-events-none dark:border-b-neutral-700 dark:text-neutral-400 dark:focus:ring-neutral-600 dark:focus:border-b-neutral-600
+                focus:pt-6
+                focus:pb-2
+                [&:not(:placeholder-shown)]:pt-6
+                [&:not(:placeholder-shown)]:pb-2
+                autofill:pt-6
+                autofill:pb-2" placeholder="pass">
+          <label for="hs-floating-underline-input-password"
+            class="absolute top-0 start-0 py-1 px-0 h-full text-md truncate pointer-events-none transition ease-in-out duration-100 border border-transparent  origin-[0_0] peer-disabled:opacity-50 peer-disabled:pointer-events-none
+                  peer-focus:scale-90
+                  peer-focus:translate-x-0.5
+                  peer-focus:-translate-y-1.5
+                  peer-focus:text-gray-500 dark:peer-focus:text-neutral-500
+                  peer-[:not(:placeholder-shown)]:scale-90
+                  peer-[:not(:placeholder-shown)]:translate-x-0.5
+                  peer-[:not(:placeholder-shown)]:-translate-y-1.5
+                  peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500 dark:text-neutral-500">New password</label>
+
+          @if (newPass?.errors && newPass?.touched) {
+          <div
+            class="bg-red-50 border border-red-200 text-sm text-red-800 rounded-sm p-4 mt-2 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500"
+            role="alert" tabindex="-1" aria-labelledby="hs-with-list-label">
+            <div class="flex ">
+
+              <div class="shrink-0">
+                <svg class="shrink-0 size-4 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="m15 9-6 6"></path>
+                  <path d="m9 9 6 6"></path>
+                </svg>
+              </div>
+
+
+            </div>
+          </div>
+          }
+
+        </div>
+
+
+
+        <div>
+          <button [disabled]="isLoading" type="submit" class="btn">Change Password
+            @if (isLoading) {
+            <span><i class="fa fa-spin fa-spinner"></i></span>
+            }
+          </button>
+
+          <!-- @if (errorMsg) {
+                <div
+                  class="mt-2 bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg p-4 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500"
+                  role="alert" tabindex="-1" aria-labelledby="hs-soft-color-danger-label">
+                  {{errorMsg}}
+                </div>
+                } -->
+
+        </div>
+
+      </form>
+      }
+
+    </div>
+  </div>
+
+</section>

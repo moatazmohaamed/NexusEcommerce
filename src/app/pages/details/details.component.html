@@ -1,0 +1,65 @@
+<section class="container mx-auto mb-[8rem] relative ">
+
+  <div class="title">
+    <h1 class="text-center text-3xl font-bold py-4 text-indigo-950 dark:text-white">Product Details</h1>
+  </div>
+  <div class="grid lg:grid-cols-2 gap-5 lg:gap-3 justify-items-center items-center">
+    <p-galleria [value]="productPhotos" [responsiveOptions]="responsiveOptions"
+      [containerStyle]="{ 'max-width': '640px', 'border': '0' }" [numVisible]="5">
+      <ng-template #item let-item>
+        <img [src]="item" style="width:60%" />
+      </ng-template>
+      <ng-template #thumbnail let-item>
+        <img [src]="item" style="width:70%" />
+      </ng-template>
+    </p-galleria>
+
+    <div class="space-y-4 text-center md:text-start ">
+      <h1 class="text-2xl font-bold text-center md:text-start ">
+        {{productData.title}}
+      </h1>
+      <div class="flex items-center space-x-2 justify-center md:justify-start">
+        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+        <span class="border-r pr-3 text-gray-600">({{productData.ratingsQuantity}} Reviews)</span>
+        <p class="text-green-800 dark:text-green-400">In Stock</p>
+      </div>
+      <p class="text-3xl font-semibold">{{productData.price}} EGP <span
+          class="text-xl font-bold text-gray-900 line-through dark:text-gray-300">{{productData.price - 50}}EGP</span>
+      </p>
+      <p class="text-gray-600 dark:text-gray-300">{{productData.description}}</p>
+
+      <div class="space-y-2">
+        <div class="flex space-x-2">
+        </div>
+        <div class="flex items-center space-x-2 justify-center md:justify-start">
+          <h2 class="text-lg font-semibold ">Size:</h2>
+          <span role="button" class="rounded border dark:border-gray-700 px-4 py-2">XS</span>
+          <span role="button" class="rounded border dark:border-gray-700 px-4 py-2">S</span>
+          <span role="button" class="rounded border dark:border-gray-700 px-4 py-2">M</span>
+          <span role="button" class="rounded border dark:border-gray-700 px-4 py-2">L</span>
+          <span role="button" class="rounded border dark:border-gray-700 px-4 py-2">XL</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row items-center justify-center md:justify-start space-x-4">
+
+        <div class="py-2">
+          <button (click)="addToCart(productID)" class="rounded-lg bg-gray-200 px-6 py-2 text-gray-800">Add to
+            Cart</button>
+        </div>
+
+      </div>
+
+      <div class="space-y-2">
+        <p class="text-gray-600 dark:text-white/40">Free Delivery</p>
+        <p class="text-gray-600 dark:text-white/40">Enter your postal code for Delivery Availability</p>
+        <p class="text-gray-600 dark:text-white/40">Free 30 Days Delivery Returns. Details</p>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+</section>

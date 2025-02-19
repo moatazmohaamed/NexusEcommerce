@@ -1,0 +1,319 @@
+<!-- Main Content Area -->
+<section class="container mx-auto flex flex-col px-4 py-6 lg:flex-row">
+  <aside class="mb-6 w-full lg:mb-0 lg:w-1/4 lg:pr-6 ">
+    <div class="rounded-lg bg-white dark:bg-black p-6 shadow-md">
+      <h2 class="mb-4 text-lg font-semibold text-white dark:text-black">CATEGORIES</h2>
+      <ul class="space-y-2">
+        <li>
+          <button role="button" (click)="categoryProd = null"
+            class="text-dark w-full text-start hover:text-gray-600 dark:text-white text-[1.1rem] dark:hover:text-gray-300 focus:outline-none focus:bg-gray-300 px-2 p-1 rounded-lg">
+            All
+            Products
+          </button>
+        </li>
+        @for (cat of allCategory.slice(0,5); track $index) {
+        <li>
+          <button (click)="onCategoryClick(cat.name)" role="button" (click)="getCategoryId(cat._id)"
+            class="text-dark text-[1.1rem] w-full text-start p-1 rounded-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10 px-2">
+            {{cat.name}}
+          </button>
+        </li>
+        }
+        <div class="hs-accordion-group">
+          <div class="hs-accordion active" id="hs-basic-heading-one">
+            <button
+              class="hs-accordion-toggle hs-accordion-active:text-black py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 focus:outline-none focus:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-white dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400"
+              aria-expanded="true" aria-controls="hs-basic-collapse-one">
+              <svg class="hs-accordion-active:block  block size-3.5" xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14"></path>
+                <path d="M12 5v14"></path>
+              </svg>
+
+              More Categories
+            </button>
+            <div id="hs-basic-collapse-one"
+              class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region"
+              aria-labelledby="hs-basic-heading-one">
+              @for (cat of allCategory.slice(5); track $index) {
+              <li>
+                <button (click)="onCategoryClick(cat.name)" role="button" (click)="getCategoryId(cat._id)"
+                  class="text-dark text-[1.1rem] w-full text-start p-1 rounded-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10 px-2">
+                  {{cat.name}}
+                </button>
+              </li>
+              }
+
+            </div>
+          </div>
+        </div>
+      </ul>
+    </div>
+
+
+    <div class="w-3/4 py-7 hidden md:block">
+      <swiper-container class="mySwiper" effect="cards" grab-cursor="true">
+        <swiper-slide>
+          <img src="assets/card/zara.png" alt="" class="w-full">
+        </swiper-slide>
+        <swiper-slide>
+          <img src="assets/card/nike.png" alt="" class="w-full">
+        </swiper-slide>
+        <swiper-slide>
+          <img src="assets/card/addidas.png" alt="" class="w-full">
+        </swiper-slide>
+        <swiper-slide>
+          <img src="assets/card/channel.png" alt="" class="w-full">
+        </swiper-slide>
+        <swiper-slide>
+          <img src="assets/card/lv.png" alt="" class="w-full">
+        </swiper-slide>
+
+
+
+
+      </swiper-container>
+    </div>
+
+  </aside>
+
+  <!-- Main Content -->
+  <main class="w-full lg:w-3/4">
+    <div class="p-6">
+      <div class="flex justify-between items-center">
+        <h2 class="mb-4 text-2xl font-semibold text-black dark:text-white">
+          @if (!categoryProd) {
+          All Products
+          } @else{
+          {{selectedCategory}}
+
+          }
+        </h2>
+        <div class="hs-dropdown relative inline-flex">
+          <button id="hs-dropdown" type="button"
+            class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+            aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+            Sort By Price
+            <svg class="hs-dropdown-open:rotate-180 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6" /></svg>
+          </button>
+
+          <div
+            class="hs-dropdown-menu transition-[opacity,margin] ml-7 duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 z-[200] dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
+            role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown">
+            <div class="p-1 space-y-0.5">
+              <button (click)="sortByPrice('asc')"
+                class="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-lg text-md text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
+                Low to High
+              </button>
+              <button (click)="sortByPrice('desc')"
+                class="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-lg text-md text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
+                High to Low
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    @if(categoryProd == null){
+    <div class="grid gap-6 md:grid-cols-4">
+      <!-- Product Card -->
+      @if (currentPage == 1) {
+      @for (item of allProducts | sort: sortOrder; track $index) {
+      <div class="py-5">
+        <div
+          class="group cursor-pointer overflow-hidden rounded-lg bg-white dark:bg-black dark:text-white p-6 shadow-md ">
+          <div #productCard class="relative">
+            <div>
+              <div (mousemove)="closerLook()" class="image-container">
+                <img #productImage [routerLink]='["/details" , item._id]' [src]="item.imageCover"
+                  class="relative product-image  h-[250px] w-full rounded-md object-contain cursor-zoom-in" />
+                <div #lens class="lens  absolute pointer-events-none w-[100px] h-[100px] rounded-[4rem] bg-no-repeat">
+                </div>
+              </div>
+              <div class="absolute top-0 right-0">
+                @if (isProductWishlisted(item.id)) {
+                <i class="fas fa-heart text-2xl" role="button"></i>
+                } @else {
+                <i class="far fa-heart text-2xl" (click)="addProdToWishList(item.id)" role="button"></i>
+                }
+              </div>
+
+            </div>
+            <button (click)="addToCart(item.id)"
+              class=" cursor-pointer absolute bottom-0 mt-4 w-full translate-x-[120%] rounded-md bg-black px-4 py-2 dark:bg-white dark:text-black
+                    text-white transition-transform duration-300 ease-in-out group-hover:translate-x-0 hover:bg-gray-800">Add
+              to cart</button>
+          </div>
+
+          <div class="mt-4  ">
+            <p class="text-2xs opacity-30">{{item.category.name}}</p>
+            <div class="flex text-black dark:text-white">
+            </div>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-semibold ">{{item.title.split(" ", 2).join(" ")}}</h2>
+          </div>
+
+          <div class="mt-2">
+            <span class="text-xl font-bold text-gray-900 dark:text-white">EGP{{item.price}}.00</span>
+            <span class="ml-2 text-sm text-gray-500 line-through dark:text-white">EGP{{item.price + 150}}.00</span>
+          </div>
+        </div>
+
+      </div>
+      }
+      } @else if (currentPage == 2) {
+      @defer (on viewport(btn)) {
+      @for (item of allProducts | sort: sortOrder; track $index) {
+      <div class="py-5">
+        <div
+          class="group cursor-pointer overflow-hidden rounded-lg bg-white dark:bg-black dark:text-white p-6 shadow-md ">
+          <div #productCard class="relative">
+            <div>
+              <div (mousemove)="closerLook()" class="image-container">
+                <img #productImage [routerLink]='["/details" , item._id]' [src]="item.imageCover"
+                  class="relative product-image  h-[250px] w-full rounded-md object-contain cursor-zoom-in" />
+                <div #lens class="lens  absolute pointer-events-none w-[100px] h-[100px] rounded-[4rem] bg-no-repeat">
+                </div>
+              </div>
+              <div class="absolute top-0 right-0">
+                @if (isProductWishlisted(item.id)) {
+                <i class="fas fa-heart text-2xl" role="button"></i>
+                } @else {
+                <i class="far fa-heart text-2xl" (click)="addProdToWishList(item.id)" role="button"></i>
+                }
+              </div>
+            </div>
+            <button (click)="addToCart(item.id)"
+              class=" cursor-pointer absolute bottom-0 mt-4 w-full translate-x-[120%] rounded-md bg-black px-4 py-2 dark:bg-white dark:text-black
+                              text-white transition-transform duration-300 ease-in-out group-hover:translate-x-0 hover:bg-gray-800">Add
+              to cart</button>
+          </div>
+
+          <div class="mt-4  ">
+            <p class="text-2xs opacity-30">{{item.category.name}}</p>
+            <div class="flex text-black dark:text-white">
+            </div>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-semibold ">{{item.title.split(" ", 2).join(" ")}}</h2>
+          </div>
+
+          <div class="mt-2">
+            <span class="text-xl font-bold text-gray-900 dark:text-white">EGP{{item.price}}.00</span>
+            <span class="ml-2 text-sm text-gray-500 line-through dark:text-white">EGP{{item.price + 300}}.00</span>
+          </div>
+        </div>
+
+      </div>
+      }
+      }
+      }
+    </div>
+
+    <div class="flex items-center justify-center gap-x-1 mt-7 " aria-label="Pagination">
+
+      <button type="button" (click)="previousPage()"
+        class="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
+        aria-label="Previous" [disabled]="currentPage == 1">
+        <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"></path>
+        </svg>
+        <span>Previous</span>
+      </button>
+
+
+      <div class="flex items-center gap-x-1">
+
+        <button (click)="previousPage()" type="button" [class.bg-gray-200]="currentPage == 1"
+          class="min-h-[38px] min-w-[38px] flex justify-center items-center  text-gray-800 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none  dark:text-white dark:bg-neutral-600 ">1</button>
+
+        <button (click)="nextPage()" type="button" [class.bg-gray-200]="currentPage == 2"
+          class="min-h-[38px] min-w-[38px] flex justify-center items-center  text-gray-800 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-600 dark:text-white ">2</button>
+
+
+      </div>
+
+      <button #btn type="button" (click)="nextPage()"
+        class="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
+        aria-label="Next">
+        <span>Next</span>
+        <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </button>
+
+    </div>
+
+    } @else {
+
+    <div class="grid gap-6 md:grid-cols-4">
+      @for (prod of categoryProd | sort: sortOrder; track $index) {
+      <div class="py-5">
+        <div
+          class="group cursor-pointer overflow-hidden rounded-lg bg-white dark:bg-black dark:text-white p-6 shadow-md ">
+          <div #productCard class="relative">
+            <div>
+              <div (mousemove)="closerLook()" class="image-container">
+                <img #productImage [routerLink]='["/details" , prod._id]' [src]="prod.imageCover"
+                  class="relative product-image  h-[250px] w-full rounded-md object-contain cursor-zoom-in" />
+                <div #lens class="lens  absolute pointer-events-none w-[100px] h-[100px] rounded-[4rem] bg-no-repeat">
+                </div>
+              </div>
+              <div class="absolute top-0 right-0">
+                @if (isProductWishlisted(prod.id)) {
+                <i class="fas fa-heart text-2xl" role="button"></i>
+                } @else {
+                <i class="far fa-heart text-2xl" (click)="addProdToWishList(prod.id)" role="button"></i>
+                }
+              </div>
+            </div>
+            <button (click)="addToCart(prod._id)"
+              class=" cursor-pointer absolute bottom-0 mt-4 w-full translate-x-[120%] rounded-md bg-black px-4 py-2 dark:bg-white dark:text-black
+                        text-white transition-transform duration-300 ease-in-out group-hover:translate-x-0 hover:bg-gray-800">Add
+              to cart</button>
+          </div>
+
+          <div class="mt-4  ">
+            <p class="text-2xs opacity-30">{{prod.category.name}}</p>
+            <div class="flex text-black dark:text-white">
+            </div>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-semibold ">{{prod.title.split(" ", 2).join(" ")}}</h2>
+          </div>
+
+          <div class="mt-2">
+            <span class="text-xl font-bold text-gray-900 dark:text-white">EGP{{prod.price}}.00</span>
+            <span class="ml-2 text-sm text-gray-500 line-through dark:text-white">EGP{{prod.price + 150}}.00</span>
+          </div>
+        </div>
+
+      </div>
+      } @empty {
+      <h1 class="text-3xl w-[30rem] md:w-[40rem] m-0 md:m-[5rem] fw-bold">There is no items to this category yet📛..
+      </h1>
+      }
+    </div>
+    }
+
+
+
+  </main>
+
+
+
+
+</section>
