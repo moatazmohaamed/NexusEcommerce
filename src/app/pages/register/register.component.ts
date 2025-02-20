@@ -115,15 +115,12 @@ export class RegisterComponent {
         email: result.user.email,
         password: token,
       };
-      console.log(loginData);
 
       this.authService.sendLoginData(loginData).subscribe({
         next: (res) => {
           if (res.message === 'success' && this.signed === true) {
             localStorage.setItem('token', res.token);
             this.router.navigate(['/home']);
-          } else {
-            this.toastr.error('Account already Exists', 'Go login');
           }
         },
       });

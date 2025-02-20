@@ -129,6 +129,9 @@ export class CartComponent implements OnInit {
               this.cartService.totalCartItems.next(0);
               localStorage.removeItem('payment');
             },
+            error: (err) => {
+              this.toastr.error(err.error.message, 'Wait!');
+            },
           });
       } else if (localStorage.getItem('payment') === 'online') {
         this.ordersService
@@ -141,6 +144,8 @@ export class CartComponent implements OnInit {
             },
           });
       }
+    } else {
+      this.toastr.error('You must Enter the Details first..', 'Wait!');
     }
   }
 
@@ -168,6 +173,7 @@ export class CartComponent implements OnInit {
     this.wishlistService.getProductWishlist().subscribe({
       next: (res) => {
         this.isWishListed.set(res.data);
+        this.wishlistService.wishListCount.set(res.count);
       },
     });
   }
@@ -191,6 +197,7 @@ export class CartComponent implements OnInit {
       next: (res) => {
         this.cartService.totalCartItems.next(0);
         this.cartProducts = res.data;
+        this.totalPrice.next(0);
       },
     });
   }

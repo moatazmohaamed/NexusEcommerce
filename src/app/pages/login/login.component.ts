@@ -55,10 +55,9 @@ export class LoginComponent {
     this.authService.signUpWithGoogle().then(async (result) => {
       const token = await result.user.getIdToken();
       const userData = {
-        email: result.user.email + 's',
+        email: result.user.email,
         password: token,
       };
-      console.log(userData);
       if (isPlatformBrowser(this.id)) {
         localStorage.setItem(
           'accountData',

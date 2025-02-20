@@ -214,7 +214,7 @@ export class HomeComponent implements OnInit {
 
   toggleWishlist(productId: string): void {
     const index = this.isWishListed().indexOf(productId);
-    if (index > 0) {
+    if (index > -1) {
       this.isWishListed().splice(index, 1);
     } else {
       this.isWishListed().push(productId);

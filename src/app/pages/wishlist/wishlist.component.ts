@@ -4,7 +4,7 @@ import { IWishlist } from '../../shared/interfaces/iwishlist';
 import { CurrencyPipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../core/services/cart/cart.service';
-import { from, concatMap, tap, catchError, of } from 'rxjs';
+import { from, concatMap, tap, catchError, of, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-wishlist',
@@ -27,6 +27,7 @@ export class WishlistComponent implements OnInit {
     this.wishlistService.getProductWishlist().subscribe({
       next: (res) => {
         this.wishLisData = res;
+        this.wishlistService.wishListCount.set(res.count);
       },
     });
   }
@@ -56,25 +57,41 @@ export class WishlistComponent implements OnInit {
         this.toaster.success(res.message);
         this.removeItem(id);
         this.cartService.totalCartItems.next(res.numOfCartItems);
+        this.wishlistService.wishListCount.set(res.count);
       },
     });
   }
 
+  isProcessing: boolean = false;
+
   moveAllToCart() {
-    from(this.wishLisData.data)
-      .pipe(
-        concatMap((item) =>
-          this.cartService.addProductCart(item.id).pipe(
-            tap((res) => {
-              this.cartService.totalCartItems.next(res.numOfCartItems);
-            })
-          )
-        )
-      )
-      .subscribe({
-        complete: () => {
-          this.wishLisData.data.forEach((item) => this.removeItem(item.id));
-        },
-      });
+    this.isProcessing = true;
+
+    const moveObservables = this.wishLisData.data.map((item) =>
+      this.cartService.addProductCart(item.id)
+    );
+
+    forkJoin(moveObservables).subscribe({
+      next: (responses) => {
+        const totalCartItems = responses.reduce(
+          (sum, res) => sum + res.numOfCartItems,
+          0
+        );
+        this.cartService.totalCartItems.next(totalCartItems);
+
+        const totalWishlistCount = responses.reduce(
+          (sum, res) => sum + res.count,
+          0
+        );
+        this.wishlistService.wishListCount.set(totalWishlistCount);
+      },
+      complete: () => {
+        this.wishLisData.data.forEach((item) => this.removeItem(item.id));
+        this.isProcessing = false;
+      },
+      error: () => {
+        this.isProcessing = false;
+      },
+    });
   }
 }
